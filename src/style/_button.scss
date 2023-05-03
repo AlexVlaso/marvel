@@ -1,0 +1,35 @@
+.btn {
+  width: 101px;
+  height: 38px;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 16px;
+  color: #ffffff;
+  border: none;
+
+  &_red {
+    background: #9f0013;
+    background: linear-gradient(135deg, transparent 8px, #9f0013 0) top left,
+      linear-gradient(-135deg, transparent 0, #9f0013 0) top right,
+      linear-gradient(-45deg, transparent 8px, #9f0013 0) bottom right,
+      linear-gradient(45deg, transparent 0, #9f0013 0) bottom left;
+    background-size: 50% 50%;
+    background-repeat: no-repeat;
+  }
+  &_grey {
+    background: #5c5c5c;
+    background: linear-gradient(135deg, transparent 8px, #5c5c5c 0) top left,
+      linear-gradient(-135deg, transparent 0, #5c5c5c 0) top right,
+      linear-gradient(-45deg, transparent 8px, #5c5c5c 0) bottom right,
+      linear-gradient(45deg, transparent 0, #5c5c5c 0) bottom left;
+    background-size: 50% 50%;
+    background-repeat: no-repeat;
+  }
+  &_big {
+    width: 170px;
+    margin: 15px auto;
+  }
+  &_mt-10 {
+    margin-top: 10px;
+  }
+}

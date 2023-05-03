@@ -1,0 +1,47 @@
+.char__info {
+  width: 425px;
+  min-height: 300px;
+  background: #ffffff;
+  box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.25);
+  padding: 25px;
+  &-wrapper {
+    display: flex;
+  }
+  &-img {
+    margin-right: 25px;
+  }
+  &-name {
+    font-weight: 700;
+    font-size: 22px;
+    line-height: 26px;
+  }
+  &-btns {
+    margin-top: 35px;
+    display: flex;
+    flex-direction: column;
+  }
+  &-desc {
+    margin-top: 15px;
+    margin-bottom: 0px;
+  }
+  &-subtitle {
+    margin-top: 15px;
+    margin-bottom: 0;
+    font-weight: 700;
+    font-size: 18px;
+    line-height: 21px;
+  }
+  &-comics {
+    margin-top: 10px;
+    list-style-type: none;
+    padding-left: 0;
+    li {
+      padding: 4px 10px;
+      box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+      font-weight: 400;
+      font-size: 14px;
+      line-height: 16px;
+      margin-bottom: 10px;
+    }
+  }
+}
