@@ -1,7 +1,7 @@
-import AppHeader from "../appHeader/appHeader";
-import CharInfo from "../charInfo/charInfo";
-import CharList from "../charList/charList";
-import RandomChar from "../randomChar/randomChar";
+import AppHeader from "../appHeader/AppHeader";
+import CharInfo from "../charInfo/CharInfo";
+import CharList from "../charList/CharList";
+import RandomChar from "../randomChar/RandomChar";
 import "./app.scss";
 import altronh from "../../resources/img/bg_asset.png";
 
