@@ -8,7 +8,9 @@ class CharacterService {
   _transformData(char) {
     return {
       name: char.name,
-      description: char.description,
+      description: char.description
+        ? char.description
+        : "No description for this character was found",
       thumbnail: `${char.thumbnail.path}.${char.thumbnail.extension}`,
       homepage: char.urls[0].url,
       wiki: char.urls[1].url,
@@ -17,13 +19,13 @@ class CharacterService {
   async getCharacter(id) {
     const serchUrl = `${this._baseUrl}characters/${id}?apikey=${this._apikey}`;
     const res = await this._getResponse(serchUrl);
-    return this._transformData(res);
+    return this._transformData(res.data.results[0]);
   }
 
   async getAllCharacters() {
     const serchUrl = `${this._baseUrl}characters?apikey=${this._apikey}`;
     const res = await this._getResponse(serchUrl);
-    return res.map(this._transformData);
+    return res.data.results.map(this._transformData);
   }
 }
 

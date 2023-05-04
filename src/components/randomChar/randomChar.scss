@@ -10,9 +10,13 @@
     box-shadow: 5px 5px 20px rgba(0, 0, 0, 0.25);
     display: flex;
     justify-content: space-between;
-
+    &-img {
+      width: 180px;
+      height: 180px;
+    }
     &-desc {
       width: 265px;
+      position: relative;
     }
     &-title {
       font-weight: 700;
@@ -26,7 +30,8 @@
       line-height: 16px;
     }
     &-btns {
-      margin-top: 13px;
+      position: absolute;
+      bottom: 0;
       width: 232px;
       display: flex;
       justify-content: space-between;
