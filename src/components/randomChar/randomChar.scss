@@ -8,8 +8,19 @@
     width: 550px;
     min-height: 250px;
     box-shadow: 5px 5px 20px rgba(0, 0, 0, 0.25);
-    display: flex;
-    justify-content: space-between;
+    &-content {
+      justify-content: space-between;
+      display: flex;
+    }
+
+    &-error {
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      iframe {
+        width: 180px;
+      }
+    }
     &-img {
       width: 180px;
       height: 180px;
