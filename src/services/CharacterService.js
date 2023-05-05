@@ -7,6 +7,7 @@ class CharacterService {
   }
   _transformData(char) {
     return {
+      id: char.id,
       name: char.name,
       description: char.description
         ? char.description
@@ -23,7 +24,7 @@ class CharacterService {
   }
 
   async getAllCharacters() {
-    const serchUrl = `${this._baseUrl}characters?apikey=${this._apikey}`;
+    const serchUrl = `${this._baseUrl}characters?limit=9&offset=302&apikey=${this._apikey}`;
     const res = await this._getResponse(serchUrl);
     return res.data.results.map(this._transformData);
   }
