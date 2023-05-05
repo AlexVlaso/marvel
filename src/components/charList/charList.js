@@ -9,7 +9,13 @@ class CharList extends Component {
     loading: true,
     error: false,
   };
+
   characterService = new CharacterService();
+
+  componentDidMount() {
+    this.getListOfCharactersData();
+  }
+
   getListOfCharactersData() {
     this.characterService
       .getAllCharacters()
@@ -20,9 +26,7 @@ class CharList extends Component {
         this.setState({ error: true, loading: false });
       });
   }
-  componentDidMount() {
-    this.getListOfCharactersData();
-  }
+
   renderCharacters(arr) {
     const results = arr.map((char) => {
       return (
