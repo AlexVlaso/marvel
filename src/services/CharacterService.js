@@ -24,8 +24,8 @@ class CharacterService {
     return this._transformData(res.data.results[0]);
   }
 
-  async getAllCharacters() {
-    const serchUrl = `${this._baseUrl}characters?limit=9&offset=302&apikey=${this._apikey}`;
+  async getAllCharacters(offset = 302) {
+    const serchUrl = `${this._baseUrl}characters?limit=9&offset=${offset}&apikey=${this._apikey}`;
     const res = await this._getResponse(serchUrl);
     return res.data.results.map(this._transformData);
   }
