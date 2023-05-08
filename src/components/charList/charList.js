@@ -1,5 +1,6 @@
 import "./charList.scss";
 import CharacterService from "../../services/CharacterService";
+import React from "react";
 import { Component } from "react";
 import Spinner from "../spinner/Spinner";
 import ErrorMessage from "../errorMessage/ErrorMessage";
@@ -12,11 +13,20 @@ class CharList extends Component {
     newGroupLoading: false,
     lastGroup: false,
   };
-
   characterService = new CharacterService();
+  refItems = [];
 
   componentDidMount() {
     this.getListOfCharactersData();
+  }
+  addRefItem = (ref) => {
+    this.refItems.push(ref);
+  };
+  selectItem(index) {
+    this.refItems.forEach((item) =>
+      item.classList.remove("char__list-item_active")
+    );
+    this.refItems[index].classList.add("char__list-item_active");
   }
 
   getListOfCharactersData = () => {
@@ -38,13 +48,16 @@ class CharList extends Component {
   };
 
   renderCharacters(arr) {
-    const results = arr.map((char) => {
+    const results = arr.map((char, i) => {
       return (
         <div
+          tabIndex={0}
           className="char__list-item"
           key={char.id}
+          ref={this.addRefItem}
           onClick={() => {
             this.props.onUpdateSelectedChar(char.id);
+            this.selectItem(i);
             window.scrollTo(0, 350);
           }}
         >
