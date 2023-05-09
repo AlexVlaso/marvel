@@ -1,63 +1,58 @@
 import "./charList.scss";
 import CharacterService from "../../services/CharacterService";
-import React from "react";
-import { Component } from "react";
+import { useState, useEffect } from "react";
 import Spinner from "../spinner/Spinner";
 import ErrorMessage from "../errorMessage/ErrorMessage";
-class CharList extends Component {
-  state = {
-    charsList: [],
-    loading: true,
-    error: false,
-    offset: 305,
-    newGroupLoading: false,
-    lastGroup: false,
-  };
-  characterService = new CharacterService();
-  refItems = [];
+const CharList = (props) => {
+  const [charsList, setCharsList] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(false);
+  const [offset, setOffset] = useState(305);
+  const [newGroupLoading, setNewGroupLoading] = useState(false);
+  const [lastGroup, setLastGroup] = useState(false);
 
-  componentDidMount() {
-    this.getListOfCharactersData();
-  }
-  addRefItem = (ref) => {
-    this.refItems.push(ref);
-  };
-  selectItem(index) {
-    this.refItems.forEach((item) =>
-      item.classList.remove("char__list-item_active")
-    );
-    this.refItems[index].classList.add("char__list-item_active");
-  }
+  const characterService = new CharacterService();
+  const refItems = [];
+  useEffect(() => {
+    getListOfCharactersData();
+  }, []);
 
-  getListOfCharactersData = () => {
-    this.setState({ newGroupLoading: true });
-    this.characterService
-      .getAllCharacters(this.state.offset)
+  const addRefItem = (ref) => {
+    refItems.push(ref);
+  };
+  const selectItem = (index) => {
+    refItems.forEach((item) => item.classList.remove("char__list-item_active"));
+    refItems[index].classList.add("char__list-item_active");
+  };
+
+  const getListOfCharactersData = () => {
+    setNewGroupLoading(true);
+    characterService
+      .getAllCharacters(offset)
       .then((newList) => {
-        this.setState((state) => ({
-          charsList: [...state.charsList, ...newList],
-          loading: false,
-          newGroupLoading: false,
-          offset: state.offset + 9,
-          lastGroup: newList.length < 9,
-        }));
+        setCharsList((charsList) => [...charsList, ...newList]);
+        setLoading(false);
+        setNewGroupLoading(false);
+        setOffset((offset) => offset + 9);
+        setLastGroup(newList.length < 9);
       })
       .catch((error) => {
-        this.setState({ error: true, loading: false });
+        setError(true);
+        setLoading(false);
       });
   };
 
-  renderCharacters(arr) {
+  const renderCharacters = (arr) => {
     const results = arr.map((char, i) => {
       return (
         <div
           tabIndex={0}
           className="char__list-item"
           key={char.id}
-          ref={this.addRefItem}
+          ref={addRefItem}
           onClick={() => {
-            this.props.onUpdateSelectedChar(char.id);
-            this.selectItem(i);
+            props.onUpdateSelectedChar(char.id);
+            selectItem(i);
             window.scrollTo(0, 350);
           }}
         >
@@ -67,30 +62,25 @@ class CharList extends Component {
       );
     });
     return results;
-  }
-  render() {
-    const { charsList, loading, error, newGroupLoading, lastGroup } =
-      this.state;
-    const spinner = loading ? <Spinner /> : null;
-    const errorMessage = error ? <ErrorMessage /> : null;
-    const characters = !(loading || error)
-      ? this.renderCharacters(charsList)
-      : null;
-    return (
-      <div className="char__list">
-        {spinner}
-        {errorMessage}
-        {characters}
-        <button
-          className="btn btn_red btn_big"
-          disabled={newGroupLoading}
-          style={{ display: lastGroup ? "none" : "block" }}
-          onClick={this.getListOfCharactersData}
-        >
-          LOAD MORE
-        </button>
-      </div>
-    );
-  }
-}
+  };
+
+  const spinner = loading ? <Spinner /> : null;
+  const errorMessage = error ? <ErrorMessage /> : null;
+  const characters = !(loading || error) ? renderCharacters(charsList) : null;
+  return (
+    <div className="char__list">
+      {spinner}
+      {errorMessage}
+      {characters}
+      <button
+        className="btn btn_red btn_big"
+        disabled={newGroupLoading}
+        style={{ display: lastGroup ? "none" : "block" }}
+        onClick={getListOfCharactersData}
+      >
+        LOAD MORE
+      </button>
+    </div>
+  );
+};
 export default CharList;
