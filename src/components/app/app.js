@@ -4,38 +4,34 @@ import CharList from "../charList/CharList";
 import RandomChar from "../randomChar/RandomChar";
 import "./app.scss";
 import altronh from "../../resources/img/bg_asset.png";
-import { Component } from "react";
+import { useState } from "react";
 
-class App extends Component {
-  state = {
-    selectedCharId: null,
+const App = () => {
+  const [selectedCharId, setCharId] = useState(null);
+
+  const onUpdateSelectedChar = (id) => {
+    setCharId(id);
   };
-  onUpdateSelectedChar = (id) => {
-    this.setState({
-      selectedCharId: id,
-    });
-  };
-  render() {
-    return (
-      <div className="App">
-        <AppHeader />
-        <main>
-          <RandomChar />
-          <section className="char__content">
-            <div className="container">
-              <div className="char__wrapper">
-                <CharList onUpdateSelectedChar={this.onUpdateSelectedChar} />
-                <div>
-                  <CharInfo charId={this.state.selectedCharId} />
-                </div>
-                <img src={altronh} alt="altron" className="char__bg-img" />
+
+  return (
+    <div className="App">
+      <AppHeader />
+      <main>
+        <RandomChar />
+        <section className="char__content">
+          <div className="container">
+            <div className="char__wrapper">
+              <CharList onUpdateSelectedChar={onUpdateSelectedChar} />
+              <div>
+                <CharInfo charId={selectedCharId} />
               </div>
+              <img src={altronh} alt="altron" className="char__bg-img" />
             </div>
-          </section>
-        </main>
-      </div>
-    );
-  }
-}
+          </div>
+        </section>
+      </main>
+    </div>
+  );
+};
 
 export default App;
