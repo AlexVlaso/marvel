@@ -1,11 +1,11 @@
-class CharacterService {
-  _baseUrl = "https://gateway.marvel.com:443/v1/public/";
-  _apikey = "c609f1b9d796954a7d328f4c9130c80b";
-  async _getResponse(url) {
-    const response = await fetch(url);
-    return await response.json();
-  }
-  _transformData(char) {
+import { useHttp } from "../hooks/http.hook";
+
+const useCharacterService = () => {
+  const _baseUrl = "https://gateway.marvel.com:443/v1/public/";
+  const _apikey = "c609f1b9d796954a7d328f4c9130c80b";
+  const { loading, error, request } = useHttp();
+
+  function _transformData(char) {
     return {
       id: char.id,
       name: char.name,
@@ -18,17 +18,18 @@ class CharacterService {
       comics: char.comics.items,
     };
   }
-  async getCharacter(id) {
-    const serchUrl = `${this._baseUrl}characters/${id}?apikey=${this._apikey}`;
-    const res = await this._getResponse(serchUrl);
-    return this._transformData(res.data.results[0]);
+  async function getCharacter(id) {
+    const serchUrl = `${_baseUrl}characters/${id}?apikey=${_apikey}`;
+    const res = await request(serchUrl);
+    return _transformData(res.data.results[0]);
   }
 
-  async getAllCharacters(offset = 302) {
-    const serchUrl = `${this._baseUrl}characters?limit=9&offset=${offset}&apikey=${this._apikey}`;
-    const res = await this._getResponse(serchUrl);
-    return res.data.results.map(this._transformData);
+  async function getAllCharacters(offset = 302) {
+    const serchUrl = `${_baseUrl}characters?limit=9&offset=${offset}&apikey=${_apikey}`;
+    const res = await request(serchUrl);
+    return res.data.results.map(_transformData);
   }
-}
+  return { loading, error, getCharacter, getAllCharacters };
+};
 
-export default CharacterService;
+export default useCharacterService;
