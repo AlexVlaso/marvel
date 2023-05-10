@@ -6,7 +6,7 @@ import Spinner from "../spinner/Spinner";
 import ErrorMessage from "../errorMessage/ErrorMessage";
 const RandomChar = () => {
   const [char, setChar] = useState({});
-  const { loading, error, getCharacter } = useCharacterService();
+  const { loading, error, getCharacter, clearError } = useCharacterService();
 
   useEffect(() => {
     getCharacterData();
@@ -14,6 +14,7 @@ const RandomChar = () => {
 
   const getCharacterData = () => {
     const randomId = Math.floor(Math.random() * (1011400 - 1011000) + 1011000);
+    clearError();
     getCharacter(randomId).then((char) => {
       setChar(char);
     });

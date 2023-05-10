@@ -23,11 +23,15 @@ export const useHttp = () => {
         return data;
       } catch (e) {
         console.error(e.message);
+        setLoading(false);
         setError(e.message);
       }
     },
     []
   );
+  const clearError = () => {
+    setError(null);
+  };
 
-  return { loading, error, request };
+  return { loading, error, request, clearError };
 };
