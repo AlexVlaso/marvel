@@ -1,36 +1,22 @@
 import "./randomChar.scss";
 import mjolnir from "../../resources/img/mjolnir.png";
 import { useState, useEffect } from "react";
-import CharacterService from "../../services/CharacterService";
+import useCharacterService from "../../services/CharacterService";
 import Spinner from "../spinner/Spinner";
 import ErrorMessage from "../errorMessage/ErrorMessage";
 const RandomChar = () => {
   const [char, setChar] = useState({});
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(false);
+  const { loading, error, getCharacter } = useCharacterService();
 
-  const characterService = new CharacterService();
   useEffect(() => {
     getCharacterData();
   }, []);
 
   const getCharacterData = () => {
     const randomId = Math.floor(Math.random() * (1011400 - 1011000) + 1011000);
-    characterService
-      .getCharacter(randomId)
-      .then((char) => {
-        setChar(char);
-        setLoading(false);
-      })
-      .catch(() => {
-        setError(true);
-        setLoading(false);
-      });
-  };
-  const onUpdateCharacter = () => {
-    setLoading(true);
-    setError(false);
-    getCharacterData();
+    getCharacter(randomId).then((char) => {
+      setChar(char);
+    });
   };
 
   const errorMessage = error ? <ErrorMessage /> : null;
@@ -53,7 +39,7 @@ const RandomChar = () => {
             <img src={mjolnir} alt="mjolnir" className="random__choice-img" />
             <button
               className="btn btn_red random__choice__btn"
-              onClick={onUpdateCharacter}
+              onClick={getCharacterData}
             >
               TRY IT
             </button>

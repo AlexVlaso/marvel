@@ -1,15 +1,12 @@
 import "./charInfo.scss";
 import { useState, useEffect } from "react";
-import CharacterService from "../../services/CharacterService";
+import useCharacterService from "../../services/CharacterService";
 import ErrorMessage from "../errorMessage/ErrorMessage";
 import Spinner from "../spinner/Spinner";
 import Skeleton from "../skeleton/Skeleton";
 const CharInfo = (props) => {
   const [char, setChar] = useState(null);
-  const [error, setError] = useState(false);
-  const [loading, setLoading] = useState(false);
-
-  const characterService = new CharacterService();
+  const { error, loading, getCharacter } = useCharacterService();
 
   useEffect(() => {
     undateChar();
@@ -20,21 +17,12 @@ const CharInfo = (props) => {
     if (!charId) {
       return;
     }
-    setLoading(true);
-    setError(false);
     getCharacterData(charId);
   };
   const getCharacterData = (id) => {
-    characterService
-      .getCharacter(id)
-      .then((char) => {
-        setChar(char);
-        setLoading(false);
-      })
-      .catch(() => {
-        setError(true);
-        setLoading(false);
-      });
+    getCharacter(id).then((char) => {
+      setChar(char);
+    });
   };
 
   const skeleton = error || loading || char ? null : <Skeleton />;
