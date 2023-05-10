@@ -1,0 +1,21 @@
+.banner {
+  padding-top: 50px;
+  &__wrapper {
+    background-color: #232222;
+    padding-left: 45px;
+    padding-right: 25px;
+    display: grid;
+    grid-template-columns: 152px auto 153px;
+  }
+  &__text {
+    padding-left: 83px;
+    padding-top: 16px;
+    font-weight: 700;
+    font-size: 24px;
+    line-height: 28px;
+    color: #ffffff;
+  }
+  img {
+    height: 100px;
+  }
+}

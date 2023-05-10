@@ -9,7 +9,8 @@ const CharList = (props) => {
   const [newGroupLoading, setNewGroupLoading] = useState(false);
   const [lastGroup, setLastGroup] = useState(false);
 
-  const { loading, error, getAllCharacters } = useCharacterService();
+  const { loading, error, getAllCharacters, clearError } =
+    useCharacterService();
   const refItems = [];
   useEffect(() => {
     getListOfCharactersData(true);
@@ -24,6 +25,7 @@ const CharList = (props) => {
   };
 
   const getListOfCharactersData = (init) => {
+    clearError();
     setNewGroupLoading(!init);
     getAllCharacters(offset).then((newList) => {
       setCharsList((charsList) => [...charsList, ...newList]);

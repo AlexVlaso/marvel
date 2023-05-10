@@ -5,6 +5,8 @@ import RandomChar from "../randomChar/RandomChar";
 import "./app.scss";
 import altronh from "../../resources/img/bg_asset.png";
 import { useState } from "react";
+import AppBanner from "../appBanner/AppBanner";
+import ComicsList from "../comicsList/ComicsList";
 
 const App = () => {
   const [selectedCharId, setCharId] = useState(null);
@@ -17,7 +19,9 @@ const App = () => {
     <div className="App">
       <AppHeader />
       <main>
-        <RandomChar />
+        <AppBanner />
+        <ComicsList />
+        {/* <RandomChar />
         <section className="char__content">
           <div className="container">
             <div className="char__wrapper">
@@ -28,7 +32,7 @@ const App = () => {
               <img src={altronh} alt="altron" className="char__bg-img" />
             </div>
           </div>
-        </section>
+        </section> */}
       </main>
     </div>
   );
