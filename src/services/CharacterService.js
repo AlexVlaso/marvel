@@ -19,7 +19,6 @@ const useCharacterService = () => {
     };
   }
   function _transformComicsData(comics) {
-    console.log(comics);
     return {
       id: comics.id,
       title: comics.title,

@@ -6,14 +6,14 @@ import ErrorMessage from "../errorMessage/ErrorMessage";
 const ComicsList = () => {
   const [comicsList, setComicsList] = useState([]);
   const [newGroupLoading, setNewGroupLoading] = useState(false);
-  const [offset, setOffset] = useState(0);
+  const [offset, setOffset] = useState(200);
   const { error, loading, getAllComics, clearError } = useCharacterService();
   useEffect(() => {
     getListOfComics(true);
   }, []);
   const getListOfComics = (isInit) => {
     clearError();
-    setNewGroupLoading(isInit);
+    setNewGroupLoading(!isInit);
     getAllComics(offset).then((newList) => {
       setComicsList((prevList) => [...prevList, ...newList]);
       setNewGroupLoading(false);
@@ -21,9 +21,9 @@ const ComicsList = () => {
     });
   };
   const renderComics = () => {
-    const results = comicsList.map((item) => {
+    const results = comicsList.map((item, i) => {
       return (
-        <li className="comics__item" key={item.id}>
+        <li className="comics__item" key={i}>
           <img src={item.thumbnail} alt={item.title} />
           <h3 className="comics__item-title">{item.title}</h3>
           <div className="comics__item-price">{item.price}</div>
@@ -45,7 +45,9 @@ const ComicsList = () => {
           style={{ display: false ? "none" : "block" }}
           className="btn btn_red btn_big"
           disabled={newGroupLoading}
-          onClick={getListOfComics}
+          onClick={() => {
+            getListOfComics(false);
+          }}
         >
           LOAD MORE
         </button>

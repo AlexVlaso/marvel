@@ -1,3 +1,4 @@
+import { NavLink, Link } from "react-router-dom";
 import "./appHeader.scss";
 
 function AppHeader() {
@@ -6,11 +7,30 @@ function AppHeader() {
       <div className="container">
         <div className="header__wrapper">
           <h1 className="header__title">
-            <span className="header__text_red">Marvel</span> information portal
+            <Link to="/">
+              <span className="header__text_red">Marvel</span> information
+              portal
+            </Link>
           </h1>
-          <div className="header__desc">
-            <span className="header__text_red">Characters</span> /
-            <span>Comics</span>
+
+          <div className="header__links">
+            <NavLink
+              to="/"
+              style={({ isActive }) => ({
+                color: isActive ? "#9f0013" : "black",
+              })}
+            >
+              Characters
+            </NavLink>
+            /
+            <NavLink
+              to="/comics"
+              style={({ isActive }) => ({
+                color: isActive ? "#9f0013" : "black",
+              })}
+            >
+              Comics
+            </NavLink>
           </div>
         </div>
       </div>
