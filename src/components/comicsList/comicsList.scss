@@ -5,7 +5,6 @@
       margin: 100px 0;
     }
   }
-
   &__list {
     list-style-type: none;
     display: flex;
@@ -32,6 +31,12 @@
       line-height: 16px;
       color: rgba(0, 0, 0, 0.6);
       text-transform: uppercase;
+    }
+    &:hover {
+      transform: translateY(-5px);
+      a {
+        color: black;
+      }
     }
   }
 }
