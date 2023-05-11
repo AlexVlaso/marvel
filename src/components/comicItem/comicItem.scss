@@ -1,0 +1,51 @@
+.comic {
+  padding-top: 50px;
+  min-height: 650px;
+  &__wrapper {
+    display: grid;
+    grid-template-columns: 293px auto 85px;
+  }
+  img {
+    width: 295px;
+    height: 450px;
+  }
+  &__info {
+    padding-left: 50px;
+    width: 550px;
+  }
+  &__title {
+    font-weight: 700;
+    font-size: 22px;
+    line-height: 26px;
+  }
+  &__desc {
+    margin-top: 28px;
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 21px;
+  }
+  &__pages {
+    margin-top: 40px;
+    font-weight: 400;
+    font-size: 18px;
+  }
+  &__language {
+    margin-top: 25px;
+    font-weight: 400;
+    font-size: 18px;
+  }
+  &__price {
+    margin-top: 25px;
+    font-weight: 700;
+    font-size: 24px;
+    color: #9f0013;
+  }
+  &__link-back {
+    font-weight: 700;
+    font-size: 18px;
+    line-height: 21px;
+    &:hover {
+      color: black;
+    }
+  }
+}

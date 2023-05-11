@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import "./comicsList.scss";
 import useCharacterService from "../../services/CharacterService";
 import Spinner from "../spinner/Spinner";
@@ -24,9 +25,11 @@ const ComicsList = () => {
     const results = comicsList.map((item, i) => {
       return (
         <li className="comics__item" key={i}>
-          <img src={item.thumbnail} alt={item.title} />
-          <h3 className="comics__item-title">{item.title}</h3>
-          <div className="comics__item-price">{item.price}</div>
+          <Link to={`/comics/${item.id}`}>
+            <img src={item.thumbnail} alt={item.title} />
+            <h3 className="comics__item-title">{item.title}</h3>
+            <div className="comics__item-price">{item.price}</div>
+          </Link>
         </li>
       );
     });

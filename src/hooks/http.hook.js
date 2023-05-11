@@ -22,7 +22,6 @@ export const useHttp = () => {
         setLoading(false);
         return data;
       } catch (e) {
-        console.error(e.message);
         setLoading(false);
         setError(e.message);
       }

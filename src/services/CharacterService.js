@@ -26,7 +26,7 @@ const useCharacterService = () => {
         ? comics.description
         : "No description for this comics was found",
       pageCount: comics.pageCount
-        ? `${comics.pageCount}p.`
+        ? `${comics.pageCount} pages`
         : "No information about the number of pages",
       price:
         comics.prices[0]?.price !== 0
@@ -52,12 +52,18 @@ const useCharacterService = () => {
     const res = await request(serchUrl);
     return res.data.results.map(_transformComicsData);
   }
+  async function getComic(id) {
+    const serchUrl = `${_baseUrl}comics/${id}?&apikey=${_apikey}`;
+    const res = await request(serchUrl);
+    return _transformComicsData(res.data.results[0]);
+  }
   return {
     loading,
     error,
     getCharacter,
     getAllCharacters,
     getAllComics,
+    getComic,
     clearError,
   };
 };
