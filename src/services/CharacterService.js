@@ -31,7 +31,7 @@ const useCharacterService = () => {
       price:
         comics.prices[0]?.price !== 0
           ? `${comics.prices[0]?.price}$`
-          : "not available",
+          : "NOT AVAILABLE",
       thumbnail: `${comics.thumbnail.path}.${comics.thumbnail.extension}`,
       language: comics.textObjects[0]?.language || "en-us",
     };

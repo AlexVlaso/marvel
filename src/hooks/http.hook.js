@@ -18,6 +18,9 @@ export const useHttp = () => {
           body: body,
           headers: headers,
         });
+        if (!response.ok) {
+          throw Error(response.status);
+        }
         const data = await response.json();
         setLoading(false);
         return data;
