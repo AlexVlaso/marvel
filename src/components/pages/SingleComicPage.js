@@ -1,3 +1,4 @@
+import "./singleComicPage.scss";
 import ComicItem from "../comicItem/ComicItem";
 import AppBanner from "../appBanner/AppBanner";
 import { useParams } from "react-router-dom";
