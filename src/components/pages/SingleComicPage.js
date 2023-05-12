@@ -14,9 +14,9 @@ const SingleComicPage = () => {
     getComicData();
   }, [id]);
   const getComicData = () => {
+    clearError();
     getComic(id).then((comic) => {
       setComic(comic);
-      console.log(comic);
     });
   };
   const spinner = loading ? <Spinner /> : null;
