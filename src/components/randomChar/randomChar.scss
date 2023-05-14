@@ -12,6 +12,14 @@
       justify-content: space-between;
       display: flex;
     }
+    .spinner {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      img {
+        margin: 0;
+      }
+    }
 
     &-error {
       width: 100%;

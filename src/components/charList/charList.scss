@@ -10,10 +10,6 @@
         width: 300px;
       }
     }
-    .spinner {
-      padding-top: 100px;
-      align-items: start;
-    }
     &-item {
       width: 200px;
       height: 318px;
@@ -29,6 +25,20 @@
       &_active {
         box-shadow: (0px 5px 20px #9f0013);
         transform: translateY(-10px);
+      }
+      &-enter {
+        opacity: 0;
+      }
+      &-enter-active {
+        opacity: 1;
+        transition: opacity 1000ms;
+      }
+      &-exit {
+        opacity: 1;
+      }
+      &-exit-active {
+        opacity: 0;
+        transition: opacity 1000ms;
       }
     }
   }

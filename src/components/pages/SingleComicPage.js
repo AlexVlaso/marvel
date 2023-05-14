@@ -1,3 +1,4 @@
+import "./singleComicPage.scss";
 import ComicItem from "../comicItem/ComicItem";
 import AppBanner from "../appBanner/AppBanner";
 import { useParams } from "react-router-dom";
@@ -5,6 +6,7 @@ import { useEffect, useState } from "react";
 import useCharacterService from "../../services/CharacterService";
 import Spinner from "../spinner/Spinner";
 import Page404 from "../page404/Page404";
+import { CSSTransition } from "react-transition-group";
 
 const SingleComicPage = () => {
   const [comic, setComic] = useState();
@@ -28,7 +30,13 @@ const SingleComicPage = () => {
       <AppBanner />
       {spinner}
       {errorMessage}
-      {content}
+      <CSSTransition
+        in={content ? true : false}
+        timeout={500}
+        classNames={"node"}
+      >
+        <div>{content}</div>
+      </CSSTransition>
     </>
   );
 };

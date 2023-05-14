@@ -1,9 +1,6 @@
 .comics {
   &__content {
     padding: 45px 0;
-    .spinner {
-      margin: 100px 0;
-    }
   }
   &__list {
     list-style-type: none;
@@ -37,6 +34,20 @@
       a {
         color: black;
       }
+    }
+    &-enter {
+      opacity: 0;
+    }
+    &-enter-active {
+      opacity: 1;
+      transition: opacity 500ms;
+    }
+    &-exit {
+      opacity: 1;
+    }
+    &-exit-active {
+      opacity: 0;
+      transition: opacity 500ms;
     }
   }
 }

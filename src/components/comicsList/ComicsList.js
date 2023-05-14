@@ -4,6 +4,7 @@ import "./comicsList.scss";
 import useCharacterService from "../../services/CharacterService";
 import Spinner from "../spinner/Spinner";
 import ErrorMessage from "../errorMessage/ErrorMessage";
+import { CSSTransition, TransitionGroup } from "react-transition-group";
 const ComicsList = () => {
   const [comicsList, setComicsList] = useState([]);
   const [newGroupLoading, setNewGroupLoading] = useState(false);
@@ -24,13 +25,15 @@ const ComicsList = () => {
   const renderComics = () => {
     const results = comicsList.map((item, i) => {
       return (
-        <li className="comics__item" key={i}>
-          <Link to={`/comics/${item.id}`}>
-            <img src={item.thumbnail} alt={item.title} />
-            <h3 className="comics__item-title">{item.title}</h3>
-            <div className="comics__item-price">{item.price}</div>
-          </Link>
-        </li>
+        <CSSTransition key={i} classNames={"comics__item"} timeout={500}>
+          <li className="comics__item" key={i}>
+            <Link to={`/comics/${item.id}`}>
+              <img src={item.thumbnail} alt={item.title} />
+              <h3 className="comics__item-title">{item.title}</h3>
+              <div className="comics__item-price">{item.price}</div>
+            </Link>
+          </li>
+        </CSSTransition>
       );
     });
     return results;
@@ -43,7 +46,10 @@ const ComicsList = () => {
       <div className="container">
         {spinner}
         {errorMessage}
-        <ul className="comics__list">{comicsItems}</ul>
+        <TransitionGroup content="ul" className={"comics__list"}>
+          {comicsItems}
+        </TransitionGroup>
+
         <button
           style={{ display: false ? "none" : "block" }}
           className="btn btn_red btn_big"
