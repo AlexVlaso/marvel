@@ -3,6 +3,8 @@ import useCharacterService from "../../services/CharacterService";
 import { useState, useEffect } from "react";
 import Spinner from "../spinner/Spinner";
 import ErrorMessage from "../errorMessage/ErrorMessage";
+import { CSSTransition, TransitionGroup } from "react-transition-group";
+import { useRef } from "react";
 const CharList = (props) => {
   const [charsList, setCharsList] = useState([]);
   const [offset, setOffset] = useState(305);
@@ -38,20 +40,26 @@ const CharList = (props) => {
   const renderCharacters = (arr) => {
     const results = arr.map((char, i) => {
       return (
-        <div
-          tabIndex={0}
-          className="char__list-item"
+        <CSSTransition
           key={char.id}
-          ref={addRefItem}
-          onClick={() => {
-            props.onUpdateSelectedChar(char.id);
-            selectItem(i);
-            window.scrollTo(0, 350);
-          }}
+          timeout={1000}
+          classNames="char__list-item"
         >
-          <img src={char.thumbnail} alt={char.name} className="char__img" />
-          <h3 className="char__name">{char.name}</h3>
-        </div>
+          <div
+            tabIndex={0}
+            className="char__list-item"
+            key={char.id}
+            ref={addRefItem}
+            onClick={() => {
+              props.onUpdateSelectedChar(char.id);
+              selectItem(i);
+              window.scrollTo(0, 350);
+            }}
+          >
+            <img src={char.thumbnail} alt={char.name} className="char__img" />
+            <h3 className="char__name">{char.name}</h3>
+          </div>
+        </CSSTransition>
       );
     });
     return results;
@@ -64,7 +72,7 @@ const CharList = (props) => {
     <div className="char__list">
       {spinner}
       {errorMessage}
-      {characters}
+      <TransitionGroup component={null}>{characters}</TransitionGroup>
       <button
         className="btn btn_red btn_big"
         disabled={newGroupLoading}

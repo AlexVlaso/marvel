@@ -2,6 +2,7 @@ import "./charInfo.scss";
 import { useState, useEffect } from "react";
 import useCharacterService from "../../services/CharacterService";
 import ErrorMessage from "../errorMessage/ErrorMessage";
+import { CSSTransition } from "react-transition-group";
 import Spinner from "../spinner/Spinner";
 import Skeleton from "../skeleton/Skeleton";
 const CharInfo = (props) => {
@@ -33,7 +34,13 @@ const CharInfo = (props) => {
     <div className="char__info">
       {skeleton}
       {spinner}
-      {content}
+      <CSSTransition
+        in={content ? true : false}
+        timeout={500}
+        classNames={"char__info"}
+      >
+        <div>{content}</div>
+      </CSSTransition>
       {errorMessage}
     </div>
   );
