@@ -41,6 +41,11 @@ const useCharacterService = () => {
     const res = await request(serchUrl);
     return _transformCharData(res.data.results[0]);
   }
+  async function getCharacterByName(name) {
+    const serchUrl = `${_baseUrl}characters?name=${name}&apikey=${_apikey}`;
+    const res = await request(serchUrl);
+    return res.data.results.map(_transformCharData);
+  }
 
   async function getAllCharacters(offset = 302) {
     const serchUrl = `${_baseUrl}characters?limit=9&offset=${offset}&apikey=${_apikey}`;
@@ -65,6 +70,7 @@ const useCharacterService = () => {
     getAllComics,
     getComic,
     clearError,
+    getCharacterByName,
   };
 };
 

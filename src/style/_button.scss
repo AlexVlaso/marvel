@@ -26,6 +26,9 @@
     background-repeat: no-repeat;
     &:disabled {
       filter: grayscale(0.5);
+      &:hover {
+        transform: none;
+      }
     }
   }
   &_grey {
