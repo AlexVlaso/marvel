@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import Spinner from "../spinner/Spinner";
 import ErrorMessage from "../errorMessage/ErrorMessage";
 import { CSSTransition, TransitionGroup } from "react-transition-group";
-import { useRef } from "react";
+
 const CharList = (props) => {
   const [charsList, setCharsList] = useState([]);
   const [offset, setOffset] = useState(305);

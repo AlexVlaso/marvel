@@ -9,6 +9,7 @@
     margin-top: 15px;
     display: flex;
     justify-content: space-between;
+    align-items: center;
   }
   &__label {
     font-weight: 700;
@@ -32,5 +33,11 @@
     font-weight: 700;
     font-size: 18px;
     color: #9f0013;
+  }
+  &__info {
+    margin-top: 25px;
+    font-weight: 700;
+    font-size: 18px;
+    color: green;
   }
 }

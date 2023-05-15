@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import "./comicItem.scss";
-const ComicItem = ({ comic }) => {
-  const { title, description, pageCount, price, thumbnail, language } = comic;
+const ComicItem = ({ data }) => {
+  const { title, description, pageCount, price, thumbnail, language } = data;
   return (
     <div className="comic">
       <div className="container">

@@ -8,23 +8,31 @@ import Spinner from "../spinner/Spinner";
 import Page404 from "../page404/Page404";
 import { CSSTransition } from "react-transition-group";
 
-const SingleComicPage = () => {
-  const [comic, setComic] = useState();
+const SinglePage = ({ Component, dataType }) => {
+  const [data, setData] = useState();
   const { id } = useParams();
-  const { loading, error, getComic, clearError } = useCharacterService();
+  const { loading, error, getComic, clearError, getCharacter } =
+    useCharacterService();
   useEffect(() => {
-    getComicData();
+    getData();
   }, [id]);
-  const getComicData = () => {
+  const getData = () => {
     clearError();
-    getComic(id).then((comic) => {
-      setComic(comic);
-    });
+    if (dataType === "comic") {
+      getComic(id).then((data) => {
+        setData(data);
+      });
+    }
+    if (dataType === "char") {
+      getCharacter(id).then((data) => {
+        setData(data);
+      });
+    }
   };
   const spinner = loading ? <Spinner /> : null;
   const errorMessage = error ? <Page404 /> : null;
   const content =
-    !(loading || error) && comic ? <ComicItem comic={comic} /> : null;
+    !(loading || error) && data ? <Component data={data} /> : null;
   return (
     <>
       <AppBanner />
@@ -40,4 +48,4 @@ const SingleComicPage = () => {
     </>
   );
 };
-export default SingleComicPage;
+export default SinglePage;
