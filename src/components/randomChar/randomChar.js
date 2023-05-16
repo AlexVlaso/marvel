@@ -2,11 +2,11 @@ import "./randomChar.scss";
 import mjolnir from "../../resources/img/mjolnir.png";
 import { useState, useEffect } from "react";
 import useCharacterService from "../../services/CharacterService";
-import Spinner from "../spinner/Spinner";
-import ErrorMessage from "../errorMessage/ErrorMessage";
+import setContent from "../../utils/setContent";
 const RandomChar = () => {
   const [char, setChar] = useState({});
-  const { loading, error, getCharacter, clearError } = useCharacterService();
+  const { process, setProcess, getCharacter, clearError } =
+    useCharacterService();
 
   useEffect(() => {
     getCharacterData();
@@ -15,23 +15,18 @@ const RandomChar = () => {
   const getCharacterData = () => {
     const randomId = Math.floor(Math.random() * (1011400 - 1011000) + 1011000);
     clearError();
-    getCharacter(randomId).then((char) => {
-      setChar(char);
-    });
+    getCharacter(randomId)
+      .then((char) => {
+        setChar(char);
+      })
+      .then(() => setProcess("complete"));
   };
 
-  const errorMessage = error ? <ErrorMessage /> : null;
-  const spinner = loading ? <Spinner /> : null;
-  const content = !(loading || error) ? <View char={char} /> : null;
   return (
     <section className="random">
       <div className="container">
         <div className="random__wrapper">
-          <div className="random__info">
-            {errorMessage}
-            {spinner}
-            {content}
-          </div>
+          <div className="random__info">{setContent(process, View, char)}</div>
           <div className="random__choice">
             <h2 className="random__choice-title">
               Random character for today! Do you want to get to know him better?
@@ -51,10 +46,8 @@ const RandomChar = () => {
   );
 };
 
-const View = (char) => {
-  const {
-    char: { name, description, thumbnail, homepage, wiki },
-  } = char;
+const View = ({ data }) => {
+  const { name, description, thumbnail, homepage, wiki } = data;
   return (
     <div className="random__info-content">
       <img src={thumbnail} alt="random" className="random__info-img" />

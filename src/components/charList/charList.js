@@ -1,9 +1,8 @@
 import "./charList.scss";
 import useCharacterService from "../../services/CharacterService";
 import { useState, useEffect } from "react";
-import Spinner from "../spinner/Spinner";
-import ErrorMessage from "../errorMessage/ErrorMessage";
 import { CSSTransition, TransitionGroup } from "react-transition-group";
+import setListContent from "../../utils/setListContent";
 
 const CharList = (props) => {
   const [charsList, setCharsList] = useState([]);
@@ -11,7 +10,7 @@ const CharList = (props) => {
   const [newGroupLoading, setNewGroupLoading] = useState(false);
   const [lastGroup, setLastGroup] = useState(false);
 
-  const { loading, error, getAllCharacters, clearError } =
+  const { process, setProcess, getAllCharacters, clearError } =
     useCharacterService();
   const refItems = [];
   useEffect(() => {
@@ -29,12 +28,14 @@ const CharList = (props) => {
   const getListOfCharactersData = (init) => {
     clearError();
     setNewGroupLoading(!init);
-    getAllCharacters(offset).then((newList) => {
-      setCharsList((charsList) => [...charsList, ...newList]);
-      setNewGroupLoading(false);
-      setOffset((offset) => offset + 9);
-      setLastGroup(newList.length < 9);
-    });
+    getAllCharacters(offset)
+      .then((newList) => {
+        setCharsList((charsList) => [...charsList, ...newList]);
+        setNewGroupLoading(false);
+        setOffset((offset) => offset + 9);
+        setLastGroup(newList.length < 9);
+      })
+      .then(() => setProcess("complete"));
   };
 
   const renderCharacters = (arr) => {
@@ -65,14 +66,15 @@ const CharList = (props) => {
     return results;
   };
 
-  const spinner = loading && !newGroupLoading ? <Spinner /> : null;
-  const errorMessage = error ? <ErrorMessage /> : null;
-  const characters = renderCharacters(charsList);
   return (
     <div className="char__list">
-      {spinner}
-      {errorMessage}
-      <TransitionGroup component={null}>{characters}</TransitionGroup>
+      <TransitionGroup component={null}>
+        {setListContent(
+          process,
+          () => renderCharacters(charsList),
+          newGroupLoading
+        )}
+      </TransitionGroup>
       <button
         className="btn btn_red btn_big"
         disabled={newGroupLoading}

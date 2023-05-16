@@ -3,7 +3,8 @@ import { useHttp } from "../hooks/http.hook";
 const useCharacterService = () => {
   const _baseUrl = "https://gateway.marvel.com:443/v1/public/";
   const _apikey = "c609f1b9d796954a7d328f4c9130c80b";
-  const { loading, error, request, clearError } = useHttp();
+  const { loading, error, process, request, clearError, setProcess } =
+    useHttp();
 
   function _transformCharData(char) {
     return {
@@ -65,6 +66,8 @@ const useCharacterService = () => {
   return {
     loading,
     error,
+    process,
+    setProcess,
     getCharacter,
     getAllCharacters,
     getAllComics,

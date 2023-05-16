@@ -2,25 +2,27 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import "./comicsList.scss";
 import useCharacterService from "../../services/CharacterService";
-import Spinner from "../spinner/Spinner";
-import ErrorMessage from "../errorMessage/ErrorMessage";
 import { CSSTransition, TransitionGroup } from "react-transition-group";
+import setListContent from "../../utils/setListContent";
 const ComicsList = () => {
   const [comicsList, setComicsList] = useState([]);
   const [newGroupLoading, setNewGroupLoading] = useState(false);
   const [offset, setOffset] = useState(200);
-  const { error, loading, getAllComics, clearError } = useCharacterService();
+  const { process, setProcess, getAllComics, clearError } =
+    useCharacterService();
   useEffect(() => {
     getListOfComics(true);
   }, []);
   const getListOfComics = (isInit) => {
     clearError();
     setNewGroupLoading(!isInit);
-    getAllComics(offset).then((newList) => {
-      setComicsList((prevList) => [...prevList, ...newList]);
-      setNewGroupLoading(false);
-      setOffset((offset) => offset + 8);
-    });
+    getAllComics(offset)
+      .then((newList) => {
+        setComicsList((prevList) => [...prevList, ...newList]);
+        setNewGroupLoading(false);
+        setOffset((offset) => offset + 8);
+      })
+      .then(() => setProcess("complete"));
   };
   const renderComics = () => {
     const results = comicsList.map((item, i) => {
@@ -38,16 +40,11 @@ const ComicsList = () => {
     });
     return results;
   };
-  const comicsItems = renderComics();
-  const spinner = loading ? <Spinner /> : null;
-  const errorMessage = error ? <ErrorMessage /> : null;
   return (
     <section className="comics__content">
       <div className="container">
-        {spinner}
-        {errorMessage}
         <TransitionGroup content="ul" className={"comics__list"}>
-          {comicsItems}
+          {setListContent(process, renderComics, newGroupLoading)}
         </TransitionGroup>
 
         <button
