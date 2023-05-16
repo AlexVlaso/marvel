@@ -7,6 +7,7 @@ import useCharacterService from "../../services/CharacterService";
 import Spinner from "../spinner/Spinner";
 import Page404 from "../page404/Page404";
 import { CSSTransition } from "react-transition-group";
+import { Helmet } from "react-helmet";
 
 const SinglePage = ({ Component, dataType }) => {
   const [data, setData] = useState();

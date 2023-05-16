@@ -1,9 +1,14 @@
 import { Link } from "react-router-dom";
 import "./comicItem.scss";
+import { Helmet } from "react-helmet";
 const ComicItem = ({ data }) => {
   const { title, description, pageCount, price, thumbnail, language } = data;
   return (
     <div className="comic">
+      <Helmet>
+        <meta name="description" content={`Single page ${title}`} />
+        <title>{title}</title>
+      </Helmet>
       <div className="container">
         <div className="comic__wrapper">
           <img src={thumbnail} alt={title} />
