@@ -1,6 +1,6 @@
 import "./charList.scss";
 import useCharacterService from "../../services/CharacterService";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import { CSSTransition, TransitionGroup } from "react-transition-group";
 import setListContent from "../../utils/setListContent";
 
@@ -65,16 +65,19 @@ const CharList = (props) => {
     });
     return results;
   };
+  const elements = useMemo(() => {
+    {
+      return setListContent(
+        process,
+        () => renderCharacters(charsList),
+        newGroupLoading
+      );
+    }
+  }, [process]);
 
   return (
     <div className="char__list">
-      <TransitionGroup component={null}>
-        {setListContent(
-          process,
-          () => renderCharacters(charsList),
-          newGroupLoading
-        )}
-      </TransitionGroup>
+      <TransitionGroup component={null}>{elements}</TransitionGroup>
       <button
         className="btn btn_red btn_big"
         disabled={newGroupLoading}
