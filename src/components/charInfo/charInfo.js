@@ -1,13 +1,12 @@
 import "./charInfo.scss";
 import { useState, useEffect } from "react";
 import useCharacterService from "../../services/CharacterService";
-import ErrorMessage from "../errorMessage/ErrorMessage";
-import { CSSTransition } from "react-transition-group";
-import Spinner from "../spinner/Spinner";
+import setContent from "../../utils/setContent";
 import Skeleton from "../skeleton/Skeleton";
+
 const CharInfo = (props) => {
   const [char, setChar] = useState(null);
-  const { error, loading, getCharacter } = useCharacterService();
+  const { getCharacter, process, setProcess } = useCharacterService();
 
   useEffect(() => {
     undateChar();
@@ -21,33 +20,24 @@ const CharInfo = (props) => {
     getCharacterData(charId);
   };
   const getCharacterData = (id) => {
-    getCharacter(id).then((char) => {
-      setChar(char);
-    });
+    getCharacter(id)
+      .then((char) => {
+        setChar(char);
+      })
+      .then(() => setProcess("complete"));
   };
+  const skeleton = process === "waiting" ? <Skeleton /> : null;
 
-  const skeleton = error || loading || char ? null : <Skeleton />;
-  const errorMessage = error ? <ErrorMessage /> : null;
-  const spinner = loading ? <Spinner /> : null;
-  const content = !(loading || error || !char) ? <View char={char} /> : null;
   return (
     <div className="char__info">
       {skeleton}
-      {spinner}
-      <CSSTransition
-        in={content ? true : false}
-        timeout={500}
-        classNames={"char__info"}
-      >
-        <div>{content}</div>
-      </CSSTransition>
-      {errorMessage}
+      {setContent(process, View, char)}
     </div>
   );
 };
 
-const View = ({ char }) => {
-  const { name, description, thumbnail, homepage, wiki, comics } = char;
+const View = ({ data }) => {
+  const { name, description, thumbnail, homepage, wiki, comics } = data;
   const limitComics = comics.length > 10 ? comics.slice(0, 10) : comics;
   const emptyComicsMessage =
     limitComics.length === 0 ? <p>No one comics found</p> : null;
